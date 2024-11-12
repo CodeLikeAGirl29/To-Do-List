@@ -5,6 +5,24 @@ const taskListElement = document.getElementById("task-list");
 // Retrieve tasks from local storage
 let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
 
+// Function to fetch a random motivational quote
+function fetchQuote() {
+    fetch('https://zenquotes.io/api/random')
+        .then(response => response.json())
+        .then(data => {
+            const quote = data[0].q; // The quote text
+            const author = data[0].a; // The quote author
+            document.getElementById('quote-text').textContent = `"${quote}" - ${author}`;
+        })
+        .catch(error => {
+            console.error('Error fetching quote:', error);
+            document.getElementById('quote-text').textContent = "Stay positive!";
+        });
+}
+
+// Call fetchQuote when the page loads
+fetchQuote();
+
 // Function to render tasks from the tasks array
 function renderTasks() {
     taskListElement.innerHTML = "";
@@ -26,6 +44,12 @@ function renderTasks() {
             taskSpan.style.textDecoration = "line-through";
         }
 
+        // Edit button
+        const editButton = document.createElement("button");
+        editButton.className = "edit-btn";
+        editButton.textContent = "✎";
+        editButton.addEventListener("click", () => editTask(index));
+
         // Delete button
         const deleteButton = document.createElement("button");
         deleteButton.className = "delete-btn";
@@ -35,6 +59,7 @@ function renderTasks() {
         // Append elements to the task item
         taskItem.appendChild(checkbox);
         taskItem.appendChild(taskSpan);
+        taskItem.appendChild(editButton);
         taskItem.appendChild(deleteButton);
         taskListElement.appendChild(taskItem);
     });
@@ -44,7 +69,7 @@ function renderTasks() {
 function addTask() {
     const taskName = inputTask.value.trim();
     if (taskName === "") {
-        alert("Please enter a task name.");
+        alert("Task name cannot be empty.");
         return;
     }
 
@@ -70,6 +95,16 @@ function deleteTask(index) {
     tasks.splice(index, 1);
     saveTasks();
     renderTasks();
+}
+
+// Function to edit a task
+function editTask(index) {
+    const newTaskName = prompt("Edit your task:", tasks[index].name);
+    if (newTaskName !== null && newTaskName.trim() !== "") {
+        tasks[index].name = newTaskName.trim();
+        saveTasks();
+        renderTasks();
+    }
 }
 
 // Function to toggle task completion
