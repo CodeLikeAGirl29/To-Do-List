@@ -4,6 +4,8 @@ A simple to-do list application built using HTML, CSS, and JavaScript as part of
 
 ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
+[![CodeFactor](https://www.codefactor.io/repository/github/codelikeagirl29/to-do-list/badge)](https://www.codefactor.io/repository/github/codelikeagirl29/to-do-list)
+
 ## Features
 
 - **Task Management**: Add, mark as complete, and delete tasks easily.
