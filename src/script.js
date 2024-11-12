@@ -49,7 +49,7 @@ function addTask() {
     }
 
     // Create a new task object and add it to the tasks array
-    const newTask = {name: taskName, completed: false};
+    const newTask = { name: taskName, completed: false };
     tasks.push(newTask);
 
     // Save to local storage and re-render the tasks
